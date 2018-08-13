@@ -1,0 +1,13 @@
+/*
+** EPITECH PROJECT, 2018
+** 
+** File description:
+** 
+*/
+
+#include "client.h"
+
+void	users(t_client *client, char *buff)
+{
+	make_msg(client, buff, 1);
+}

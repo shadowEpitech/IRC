@@ -1,0 +1,57 @@
+/*
+** EPITECH PROJECT, 2018
+** 
+** File description:
+** 
+*/
+
+#include "client.h"
+
+void	write_server(int fd, t_client *client)
+{
+	if (client->to_server)
+	{
+		dprintf(fd, "%s", client->to_server);
+		free(client->to_server);
+		client->to_server = NULL;
+	}
+}
+
+void	write_client(t_client *client)
+{
+	if (client->to_client)
+	{
+		printf("%s", client->to_client);
+		free(client->to_client);
+		client->to_client = NULL;
+	}
+}
+
+void	read_input(t_client *client)
+{
+	char	buff[4096];
+	int r;
+
+	r = read(0, buff, 4096);
+	if (r > 0)
+	{
+		if (r > 1)
+			buff[r - 1] = '\0';
+		check_cmd(buff, client);
+	}
+}
+
+void	read_server(int fd, t_client *client)
+{
+	int	r;
+	char	buff[4096];
+
+	r = read(fd, buff, 4096);
+	if (r > 0)
+	{
+		buff[r] = '\0';
+		if (client->to_client)
+			free(client->to_client);
+		client->to_client = strdup(buff);
+	}
+}

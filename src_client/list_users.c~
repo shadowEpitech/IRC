@@ -1,0 +1,21 @@
+/*
+** EPITECH PROJECT, 2018
+** 
+** File description:
+** 
+*/
+
+#include "client.h"
+
+void	list_users(t_client *client, char *buff)
+{
+	make_msg(client, buff, 1);
+}
+
+void	list_names(char *channel, t_client *client, char *buff)
+{
+	if (!channel)
+		need_more_param(client, "/names");
+	else
+		make_msg(client, buff, 1);
+}

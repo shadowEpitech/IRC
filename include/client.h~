@@ -1,0 +1,67 @@
+/*
+** EPITECH PROJECT, 2018
+** 
+** File description:
+** 
+*/
+
+#ifndef CLIENT_H_
+# define CLIENT_H_
+
+# define PORT 4242
+
+#include "utils.h"
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netdb.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <stdio.h>
+
+typedef struct s_client
+{
+	char		*host;
+	char		*nickname;
+	char		*username;
+	t_channel	*channel;
+	char		*msg;
+	char		*to_server;
+	char		*to_client;
+	int		fd;
+}		t_client;
+
+
+void	init_fct(fd_set *fd_read, fd_set *fd_write, int fd);
+t_client	*init_client(t_client *client);
+void		check_isset(fd_set *fd_read, fd_set *fd_write, int fd, t_client *client);
+void		write_server(int fd, t_client *client);
+void		write_client(t_client *client);
+void		read_input(t_client *client);
+void		read_server(int fd, t_client *client);
+void		join_channel(char *channel, t_client *client, char *buff);
+void		change_nick(char *nickname, t_client *client, char *buff);
+void		server_cmd(char *buff, t_client *client);
+void		check_cmd(char *buff, t_client *client);
+void		need_more_param(t_client *client, char *cmd);
+void		no_nickname_given(t_client *client);
+int		check_channel(char *channel);
+void		add_channel(t_client *client, char *channel);
+void		remove_channel(t_client *client, char *channel);
+int		get_channel(t_client *client, char *channel);
+void		make_msg(t_client *client, char *msg, int nb);
+void		list_users(t_client *client, char *buff);
+void		list_names(char *channel, t_client *client, char *buff);
+void		init_connection(char *address, char *port, t_client *client);
+void		connect_server(char *args, t_client *client);
+int		make_connect(t_client *client);
+void		disp_list(t_client *client, char *buff);
+void		private_msg(char *nickname, char *msg, t_client *client, char *buff);
+void		no_text_to_send(t_client *client);
+void		no_recipient(t_client *client, char *cmd);
+void		users(t_client *client, char *buff);
+int		main();
+void		run_client(int fd, t_client *select);
+void		my_select(int fd_max, fd_set *fd_read, fd_set *fd_write);
+void		not_on_channel(t_client *client, char *channel);
+
+#endif
